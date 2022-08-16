@@ -1,0 +1,27 @@
+DB_URL=postgresql://root:mysecret@localhost:5432/go-hexagonal-rest-seed?sslmode=disable
+
+network:
+	docker network create bank-network
+
+postgres:
+	docker run --name postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=mysecret -d postgres:14.3
+
+createDb:
+	docker exec -it postgres createdb --username=root --owner=root go-hexagonal-rest-seed
+
+dropDb:
+	docker exec -it postgres dropdb go-hexagonal-rest-seed
+
+migrateUp:
+	migrate -path db/migration -database "$(DB_URL)" -verbose up
+
+migrateDown:
+	migrate -path db/migration -database "$(DB_URL)" -verbose down
+
+sqlc:
+	sqlc generate
+
+domainTest:
+	go test -v -cover ./db/sqlc
+
+.PHONY: network postgres createDb dropDb migrateUp migrateDown sqlc

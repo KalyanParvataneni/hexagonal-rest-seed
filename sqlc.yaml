@@ -1,0 +1,37 @@
+version: "1"
+packages:
+  - name: "db"
+    path: "./db/sqlc"
+    queries: "./db/queries/"
+    schema: "./db/migration/"
+    engine: "postgresql"
+    emit_json_tags: true
+    sql_package: "pgx/v4"
+overrides:
+  - go_type: "github.com/jackc/pgtype.Numeric"
+    db_type: "pg_catalog.numeric"
+  - go_type: "github.com/jackc/pgtype.Text"
+    db_type: "pg_catalog.varchar"
+  - go_type: "github.com/jackc/pgtype.Int4"
+    db_type: "serial"
+  - go_type: "github.com/jackc/pgtype.Int2"
+    db_type: "pg_catalog.int2"
+  - go_type: "github.com/jackc/pgtype.Int4"
+    db_type: "pg_catalog.int4"
+  - go_type: "github.com/jackc/pgtype.UUID"
+    db_type: "uuid"
+  - go_type: "github.com/jackc/pgtype.Bool"
+    db_type: "pg_catalog.bool"
+  - go_type: "github.com/jackc/pgtype.Timestamptz"
+    db_type: "pg_catalog.timestamptz"
+  - go_type: "github.com/jackc/pgtype.Date"
+    db_type: "date"
+  - go_type: "github.com/jackc/pgtype.Text"
+    db_type: "pg_catalog.varchar"
+    nullable: true
+  - go_type: "github.com/jackc/pgtype.Numeric"
+    db_type: "pg_catalog.numeric"
+    nullable: true
+  - go_type: "github.com/jackc/pgtype.UUID"
+    db_type: "uuid"
+    nullable: true
